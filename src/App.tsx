@@ -7,7 +7,8 @@ interface MainProps {
 }
 
 interface MainState {
-  monsters: Monster[]
+  monsters: Monster[],
+  searchField: string
 }
 
 class App extends Component<MainProps, MainState> {
@@ -15,7 +16,8 @@ class App extends Component<MainProps, MainState> {
   constructor(prop: MainProps) {
     super(prop);
     this.state = {
-      monsters: []
+      monsters: [],
+      searchField: ''
     }
   }
 
@@ -31,9 +33,23 @@ class App extends Component<MainProps, MainState> {
   }
 
   render() {
+
+    const filteredMonsters = this.state.monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(this.state.searchField);
+    });
+
     return (
       <div className="App">
-        {this.state.monsters.map(monster => {
+        <input
+          className={"search-box"}
+          type={"search"}
+          placeholder={"search monsters"}
+          onChange={(event) => {
+            const searchField = event.target.value.toLowerCase();
+            this.setState({searchField});
+          }}
+        />
+        {filteredMonsters.map(monster => {
           return <div key={monster.id}><h1>{monster.name}</h1></div>
         })}
       </div>
