@@ -1,25 +1,41 @@
 import {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Monster} from "./models/monster";
 
-class App extends Component {
+interface MainProps {
+
+}
+
+interface MainState {
+  monsters: Monster[]
+}
+
+class App extends Component<MainProps, MainState> {
+
+  constructor(prop: MainProps) {
+    super(prop);
+    this.state = {
+      monsters: []
+    }
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(users => this.setState(() => {
+        return {monsters: users}
+      }, () => {
+        console.log(this.state);
+      }))
+      .catch(error => console.log(error))
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {this.state.monsters.map(monster => {
+          return <div key={monster.id}><h1>{monster.name}</h1></div>
+        })}
       </div>
     );
   }
