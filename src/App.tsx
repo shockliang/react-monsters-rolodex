@@ -1,6 +1,7 @@
 import {ChangeEvent, Component} from 'react';
 import './App.css';
 import {Monster} from "./models/monster";
+import CardList from "./components/card-list/card-list.component";
 
 interface MainProps {
 
@@ -53,9 +54,7 @@ class App extends Component<MainProps, MainState> {
           placeholder={"search monsters"}
           onChange={onSearchChange}
         />
-        {filteredMonsters.map(monster => {
-          return <div key={monster.id}><h1>{monster.name}</h1></div>
-        })}
+        <CardList monsters={filteredMonsters}/>
       </div>
     );
   }
