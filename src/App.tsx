@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {ChangeEvent, Component} from 'react';
 import './App.css';
 import {Monster} from "./models/monster";
 
@@ -32,10 +32,17 @@ class App extends Component<MainProps, MainState> {
       .catch(error => console.log(error))
   }
 
-  render() {
+  onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const searchField = event.target.value.toLowerCase();
+    this.setState({searchField});
+  };
 
-    const filteredMonsters = this.state.monsters.filter((monster) => {
-      return monster.name.toLowerCase().includes(this.state.searchField);
+  render() {
+    const {monsters, searchField} = this.state;
+    const {onSearchChange} = this;
+
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchField);
     });
 
     return (
@@ -44,10 +51,7 @@ class App extends Component<MainProps, MainState> {
           className={"search-box"}
           type={"search"}
           placeholder={"search monsters"}
-          onChange={(event) => {
-            const searchField = event.target.value.toLowerCase();
-            this.setState({searchField});
-          }}
+          onChange={onSearchChange}
         />
         {filteredMonsters.map(monster => {
           return <div key={monster.id}><h1>{monster.name}</h1></div>
