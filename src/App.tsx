@@ -2,6 +2,7 @@ import {ChangeEvent, Component} from 'react';
 import './App.css';
 import {Monster} from "./models/monster";
 import CardList from "./components/card-list/card-list.component";
+import SearchBox from "./components/search-box/search-box.component";
 
 interface MainProps {
 
@@ -48,11 +49,10 @@ class App extends Component<MainProps, MainState> {
 
     return (
       <div className="App">
-        <input
-          className={"search-box"}
-          type={"search"}
-          placeholder={"search monsters"}
-          onChange={onSearchChange}
+        <SearchBox
+          onChangeHandler={onSearchChange}
+          placeholder={'search monsters'}
+          className={'search-box'}
         />
         <CardList monsters={filteredMonsters}/>
       </div>
