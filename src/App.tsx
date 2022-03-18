@@ -49,6 +49,7 @@ class App extends Component<MainProps, MainState> {
 
     return (
       <div className="App">
+        <h1 className={'app-title'}>Monster Rolodex</h1>
         <SearchBox
           onChangeHandler={onSearchChange}
           placeholder={'search monsters'}
